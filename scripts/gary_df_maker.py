@@ -1,20 +1,13 @@
 #!/usr/bin/env python
 # coding: utf-8
-
 # # CAPSTONE TWO: NEGATIVE INCOME TAX EXPERIMENTS
-
 # ## IMPORTS
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
 
 # ## THE PERSON FILE
-
 # We need to read in the person file, which contains the target data as well as other data, and merge it with the family file which contains the treatment level and the poverty level.
-
-# In[2]:
-
-
 # GARY_FILE_PERSON_RECORD'
 GARY_FILE_PERSON_RECORD_PATH = "../data/raw/ca033001.dat"
 var_list = [
@@ -273,7 +266,7 @@ fam_df = pd.DataFrame(np.array(data_set), columns=var_list)
 fam_df.FAMNUM.astype(int)
 person_df.FAMNUM.astype(int)
 gary_df = person_df.merge(fam_df, on="FAMNUM", how="outer")
-gary_df.to_csv(r"..\data\raw\raw_gary_df")
+gary_df.to_csv("raw_gary_df.csv")
 # ## DATA CLEANING
 # In[7]:
 # gary_df.dropna(inplace=True)
