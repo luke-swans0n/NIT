@@ -2,10 +2,6 @@
 # coding: utf-8
 # # CAPSTONE TWO: NEGATIVE INCOME TAX EXPERIMENTS
 # ## IMPORTS
-import pandas as pd
-import numpy as np
-import os
-
 # ## THE PERSON FILE
 # We need to read in the person file, which contains the target data as well as other data, and merge it with the family file which contains the treatment level and the poverty level.
 # GARY_FILE_PERSON_RECORD'
