@@ -2,6 +2,10 @@ import pandas as pd
 import numpy as np
 import chunkstring
 
+gary_df = pd.read_csv('../data/raw/raw_gary_df.csv', dtype=str)
+gary_df.drop('Unnamed: 0', axis=1, inplace=True)
+gary_df.dropna(inplace=True)
+
 def stub_maker(df, list_of_lengths):
     col_dict = {}
     stub_dict = {}
