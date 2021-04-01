@@ -1,0 +1,15 @@
+def exploder(df, list_of_lengths):
+	df_dict = {}
+	for length in list_of_lengths:
+		try:
+			tiles = list(np.arrange(1, -1*length + 1)) * len(df)
+			new_df = df.copy()
+			df_dict[length] = new_df.loc[:, [col for col in test_df if length[:-3] in col]].apply(lambda x: x.explode())
+			df_dict[length]['PERIOD'] = tiles
+		except ValueError:
+			tiles = list(np.arrange(0, -1*length + 1)) * len(df)
+			new_df = df.copy()
+			df_dict[length] = new_df.loc[:, [col for col in test_df if length[:-3] in col]].apply(lambda x: x.explode())
+			df_dict[length]['PERIOD'] = tiles
+	
+		
