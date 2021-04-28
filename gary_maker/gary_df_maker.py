@@ -7,7 +7,7 @@
 # GARY_FILE_PERSON_RECORD'
 import pandas as pd
 import numpy as np
-GARY_FILE_PERSON_RECORD_PATH = "../../data/raw/ca033001.dat"
+GARY_FILE_PERSON_RECORD_PATH = "data/raw/ca033001.dat"
 var_list = [
     "FAMNUM",
     "PERNUM",
