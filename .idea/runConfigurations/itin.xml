@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="gary_df_maker" type="PythonConfigurationType" factoryName="Python" editBeforeRun="true" nameIsGenerated="true">
+  <configuration default="false" name="itin" type="PythonConfigurationType" factoryName="Python" editBeforeRun="true">
     <module name="NIT" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
@@ -11,7 +11,7 @@
     <option name="IS_MODULE_SDK" value="true" />
     <option name="ADD_CONTENT_ROOTS" value="true" />
     <option name="ADD_SOURCE_ROOTS" value="true" />
-    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gary_maker/gary_df_maker.py" />
+    <option name="SCRIPT_NAME" value="$PROJECT_DIR$/gary_maker/__init__.py" />
     <option name="PARAMETERS" value="" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />
