@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import gary_df_maker
-import stud_maker as stub
+import stub_maker as stub
 
 gary_df = pd.read_csv('raw_gary_df.csv', dtype=str)
 gary_df.drop('Unnamed: 0', axis=1, inplace=True)
