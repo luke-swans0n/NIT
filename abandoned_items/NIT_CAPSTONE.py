@@ -11,11 +11,11 @@
 import pandas as pd
 import numpy as np
 from matplotlib import pyplot as plt
-pd.options.display.width=None
-pd.options.display.max_colwidth=10000
+
+pd.options.display.width = None
+pd.options.display.max_colwidth = 10000
 pd.options.display.max_columns = 10000
 pd.options.display.max_rows = 100
-
 
 # In[3]:
 
@@ -31,7 +31,9 @@ gary_df.dropna(inplace=True)
 
 
 def chunkstring(string, length):
-    return [string[0+i:length+i] for i in range(0, len(string), length)]
+    return [string[0 + i:length + i] for i in range(0, len(string), length)]
+
+
 def stub_maker(df, list_of_lengths):
     col_dict = {}
     stub_dict = {}
@@ -46,75 +48,68 @@ def stub_maker(df, list_of_lengths):
             stub = column.split('-')[0][:-1]
             stub_cols.append(stub)
             leng = int(df[column].str.len().unique() / numeric_length)
-            df[column] = df[column].apply(chunkstring, args=[leng] )
+            df[column] = df[column].apply(chunkstring, args=[leng])
         stub_dict[length] = stub_cols
     return stub_dict, col_dict
-lengths = ['-48', '-42', '-9', '-16', '-73']
 
+
+lengths = ['-48', '-42', '-9', '-16', '-73']
 
 # In[5]:
 
 
 stubs, cols = stub_maker(gary_df, lengths)
 
-
 # In[6]:
 
 
-tiles = list(np.arange(1, 49))*5326
+tiles = list(np.arange(1, 49)) * 5326
 test_df = gary_df.copy()
-#test_df.assign(period48 = test_tile)
-test_dict = {}
-test_dict['-48'] = test_df.loc[:, [col for col in test_df if '48' in col]].apply(lambda x: x.explode())
+# test_df.assign(period48 = test_tile)
+test_dict = {'-48': test_df.loc[:, [col for col in test_df if '48' in col]].apply(lambda x: x.explode())}
 test_dict['-48']['PERIOD'] = tiles
-test_dict['-48']
 
 
 # In[7]:
 
 
-tiles = list(np.arange(0, 43))*5326
+tiles = list(np.arange(0, 43)) * 5326
 test_df = gary_df.copy()
 
 test_dict['-42'] = test_df.loc[:, [col for col in test_df if '42' in col]].apply(lambda x: x.explode())
 print(len(tiles), len(test_dict['-42']))
 test_dict['-42']['PERIOD'] = tiles
-test_dict['-42']
-
 
 # In[8]:
 
 
-tiles = list(np.arange(8, 49, 5))*5326
+tiles = list(np.arange(8, 49, 5)) * 5326
 test_df = gary_df.copy()
 
 test_dict['-9'] = test_df.loc[:, [col for col in test_df if '-9' in col]].apply(lambda x: x.explode())
 print(len(tiles), len(test_dict['-9']))
 test_dict['-9']['PERIOD'] = tiles
-test_dict['-9']
 
 
 # In[9]:
 
 
-tiles = list(np.arange(3, 49, 3))*5326
+tiles = list(np.arange(3, 49, 3)) * 5326
 test_df = gary_df.copy()
 
 test_dict['-16'] = test_df.loc[:, [col for col in test_df if '16' in col]].apply(lambda x: x.explode())
 test_dict['-16']['PERIOD'] = tiles
-test_dict['-16']
 
 
 # In[13]:
 
 
-tiles = list(np.arange(1, 6))*5326
+tiles = list(np.arange(1, 6)) * 5326
 test_df = gary_df.copy()
 
 test_dict['-73'] = test_df.loc[:, [col for col in test_df if '69-73' in col]].apply(lambda x: x.explode())
 test_dict['-73']['PERIOD'] = tiles
-test_dict['-73']
-
+]
 
 # In[ ]:
 
@@ -122,11 +117,10 @@ test_dict['-73']
 final_frame = pd.merge(test_dict['-42'], test_dict['-48'], on='PERIOD', how='left', sort=False)
 final_frame.to_csv("../data/raw/gary_exploded.csv")
 
-
 # In[ ]:
 
 
-#gary_df.set_index('PERNUM', inplace = True)
+# gary_df.set_index('PERNUM', inplace = True)
 
 
 # In[ ]:
@@ -135,14 +129,14 @@ final_frame.to_csv("../data/raw/gary_exploded.csv")
 # test =  np.arange(1,49,1)
 # test_series = np.tile(test, (1,int(255648/48)))
 
-#'''
-#length = '-48'
-#for length in lengths:
-#numeric_length = -1 * int(length)
-#gary_df['PER' + length] = [list(range(1,numeric_length ,1))] * len(gary_df)
-#long_df = gary_df.loc[:, gary_df.columns.str.contains(length)]
-#long_df.apply(pd.Series.explode)
-#'''
+# '''
+# length = '-48'
+# for length in lengths:
+# numeric_length = -1 * int(length)
+# gary_df['PER' + length] = [list(range(1,numeric_length ,1))] * len(gary_df)
+# long_df = gary_df.loc[:, gary_df.columns.str.contains(length)]
+# long_df.apply(pd.Series.explode)
+# '''
 
 
 # In[ ]:
@@ -234,7 +228,6 @@ final_frame.to_csv("../data/raw/gary_exploded.csv")
 # In[ ]:
 
 
-
 # for column in wide_cols:
 #     if '-48' in column:
 #         stubs48_split.append(column.split('-')[0])
@@ -281,9 +274,6 @@ final_frame.to_csv("../data/raw/gary_exploded.csv")
 # In[ ]:
 
 
-
-
-
 # Converting some of the more-common missing data codes
 
 # In[ ]:
@@ -320,8 +310,8 @@ final_frame.to_csv("../data/raw/gary_exploded.csv")
 # In[ ]:
 
 
-#gary_df = gary_df.loc[gary_df['TREATLEV'] != '0']
-#gary_control_df = gary_df.loc[gary_df['TREATLEV'] == '0']
+# gary_df = gary_df.loc[gary_df['TREATLEV'] != '0']
+# gary_control_df = gary_df.loc[gary_df['TREATLEV'] == '0']
 
 
 # In[ ]:
@@ -530,39 +520,38 @@ final_frame.to_csv("../data/raw/gary_exploded.csv")
 # In[ ]:
 
 
-#gary_df['NOTINFR'] = gary_df['EMPINT'].str.contains('02')
-#gary_df['NOTINFR'] = gary_df['NOTINFR'].astype(int)
-#gary_df['EMPGAIN'] = gary_df['EMPINT'].str.contains('(00)(01)', regex=True)
+# gary_df['NOTINFR'] = gary_df['EMPINT'].str.contains('02')
+# gary_df['NOTINFR'] = gary_df['NOTINFR'].astype(int)
+# gary_df['EMPGAIN'] = gary_df['EMPINT'].str.contains('(00)(01)', regex=True)
 
 
 # In[ ]:
 
 
-#gary_df['EMPLOSS'] = gary_df['EMPINT'].str.contains('(01)(00)', regex=True)
+# gary_df['EMPLOSS'] = gary_df['EMPINT'].str.contains('(01)(00)', regex=True)
 
 
 # In[ ]:
 
 
-#gary_df['EMPGAIN'] = gary_df.EMPGAIN.astype(int)
+# gary_df['EMPGAIN'] = gary_df.EMPGAIN.astype(int)
 
 
 # In[ ]:
 
 
-#gary_df['EMPLOSS'] = gary_df.EMPLOSS.astype(int)
+# gary_df['EMPLOSS'] = gary_df.EMPLOSS.astype(int)
 
 
 # In[ ]:
 
 
-#columns_for_later = ['EMPLOSS', 'EMPGAIN']
-#gary_df.drop(columns_for_later, axis=1, inplace=True)
+# columns_for_later = ['EMPLOSS', 'EMPGAIN']
+# gary_df.drop(columns_for_later, axis=1, inplace=True)
 
 
 # In[ ]:
 
 
-#gary_df['EMP'] = gary_df['EMPINT'].str.contains('01')
-#gary_df['EMP'] = gary_df.EMP.astype(int)
-
+# gary_df['EMP'] = gary_df['EMPINT'].str.contains('01')
+# gary_df['EMP'] = gary_df.EMP.astype(int)

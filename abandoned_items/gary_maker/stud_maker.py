@@ -6,6 +6,7 @@ gary_df = pd.read_csv('../data/raw/raw_gary_df.csv', dtype=str)
 gary_df.drop('Unnamed: 0', axis=1, inplace=True)
 gary_df.dropna(inplace=True)
 
+
 def stub_maker(df, list_of_lengths):
     col_dict = {}
     stub_dict = {}
@@ -20,6 +21,6 @@ def stub_maker(df, list_of_lengths):
             stub = column.split('-')[0][:-1]
             stub_cols.append(stub)
             leng = int(df[column].str.len().unique() / numeric_length)
-            df[column] = df[column].apply(chunkstring, args=[leng] )
+            df[column] = df[column].apply(chunkstring, args=[leng])
         stub_dict[length] = stub_cols
     return stub_dict, col_dict

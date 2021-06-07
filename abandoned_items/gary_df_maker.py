@@ -5,7 +5,10 @@
 # ## THE PERSON FILE
 # We need to read in the person file, which contains the target data as well as other data, and merge it with the family file which contains the treatment level and the poverty level.
 # GARY_FILE_PERSON_RECORD'
-GARY_FILE_PERSON_RECORD_PATH = "../data/raw/ca033001.dat"
+import pandas as pd
+import numpy as np
+
+GARY_FILE_PERSON_RECORD_PATH = "data/raw/ca033001.dat"
 var_list = [
     "FAMNUM",
     "PERNUM",
@@ -250,7 +253,7 @@ person_df = pd.DataFrame(np.array(data_set), columns=var_list)
 # In[4]:
 var_list = ["FAMNUM", "POVLEV", "TREATLEV"]
 data_set = []
-with open("../data/raw/ca033002.dat") as file:
+with open("../../data/raw/ca033002.dat") as file:
     for line in file:
         data = [line[0:4], line[6], line[8]]
         data_set.append(data)
@@ -262,4 +265,4 @@ fam_df = pd.DataFrame(np.array(data_set), columns=var_list)
 fam_df.FAMNUM.astype(int)
 person_df.FAMNUM.astype(int)
 gary_df = person_df.merge(fam_df, on="FAMNUM", how="outer")
-gary_df.to_csv("../data/raw/raw_gary_df.csv")
+gary_df.to_csv("raw_gary_df.csv")

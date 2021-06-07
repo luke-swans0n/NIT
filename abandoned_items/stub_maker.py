@@ -1,5 +1,6 @@
 def chunkstring(string, length):
-    return [string[0+i:length+i] for i in range(0, len(string), length)]
+    return [string[0 + i:length + i] for i in range(0, len(string), length)]
+
 
 def stub_maker(df, list_of_lengths):
     col_dict = {}
@@ -15,7 +16,6 @@ def stub_maker(df, list_of_lengths):
             stub = column.split('-')[0][:-1]
             stub_cols.append(stub)
             leng = int(df[column].str.len().unique() / numeric_length)
-            df[column] = df[column].apply(chunkstring, args=[leng] )
+            df[column] = df[column].apply(chunkstring, args=[leng])
         stub_dict[length] = stub_cols
     return stub_dict, col_dict
-  
