@@ -1,7 +1,16 @@
-from itertools import cycle
+import logging
+
+import numpy as np
+import pandas as pd
 
 from chunkstring import chunkstring as chunk
 from df_maker import gary_maker
+from sqlalchemy import create_engine
+
+logging.basicConfig(filename='nit.log', level=logging.DEBUG)
+
+engine = create_engine('sqlite:///nit.db', echo=False)
+
 
 # nit = mysql.connector.connect(
 #     host="127.0.0.1",
@@ -29,16 +38,22 @@ def exploder(df, list_of_lengths):
     for length in list_of_lengths:
         test_df = df.copy().set_index('PERNUM').applymap(str).drop("JOBS0-42", axis=1)
         no_operation_columns = [col for col in test_df.columns if "-" not in col]
-        periods = [list(range(0, length))]* len(test_df)
-        test_dict[length] = test_df.loc[:, [col for col in test_df if "1-"+str(length) in col]].applymap(lambda x: chunk(x, int(len(x)/length)))
-        test_dict[length]['PERIOD'] = periods
-        test_dict[length] = test_dict[length].reset_index(drop=True).apply(lambda x: x.explode())
-        return df
+        periods = [list(range(0, length))] * len(test_df)
+        test_dict[length] = test_df.loc[:, [col for col in test_df if "1-" + str(length) in col]].applymap(
+            lambda x: chunk(x, int(len(x) / length)))
+        logging.info(f'saved database for {length}')
+        test_dict[length].replace(np.NAN, "NaN", inplace=True)
+        logging.info(f'made test_dict for {length}')
+        test_dict[length][f'PERIOD{length}'] = periods
+        test_dict[length] = test_dict[length].apply(pd.Series.explode, axis=1)
+        logging.info(f'successfully exploded {length}')
+        test_dict[length] = test_dict[length].loc[:, ~test_dict[length].columns.duplicated()]
+        data_base_df = test_dict[length].astype(str)
+        with engine.begin() as con:
+            data_base_df.to_sql(f'{length}', con=con, if_exists='replace')
+    return test_dict
 
-
-
-
-        # write_to_sql("test", frame)
+    # write_to_sql("test", frame)
     # final_frame = list_of_frames[0].join(list_of_frames, how='outer')
     # final_frame.reset_index(level='PERIOD', inplace=True)
     # write_to_sql('demographics'.test_df[no_operation_columns])
@@ -47,6 +62,7 @@ def exploder(df, list_of_lengths):
 def main():
     gary = exploder(gary_maker(), [48, 42, 16, 9])
     print(gary)
+
 
 if __name__ == "__main__":
     main()
