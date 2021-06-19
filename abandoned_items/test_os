@@ -1,8 +1,0 @@
-import os
-
-print(
-    os.path.relpath(
-        "~/Documents/DATA_SCIENCE_PROJECTS/NIT/data/raw",
-        "~/Documents/DATA_SCIENCE_PROJECTS/scripts",
-    )
-)

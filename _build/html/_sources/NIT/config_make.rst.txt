@@ -1,0 +1,7 @@
+config\_make module
+===================
+
+.. automodule:: config_make
+   :members:
+   :undoc-members:
+   :show-inheritance:

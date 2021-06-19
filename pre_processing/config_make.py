@@ -244,5 +244,5 @@ config["GARY_IN"] = {
                          (9, 10)"""
 
 }
-with open('config.ini', 'w') as configfile:
+with open('pre_processing_config.ini', 'w') as configfile:
     config.write(configfile)

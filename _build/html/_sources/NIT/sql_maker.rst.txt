@@ -1,0 +1,7 @@
+sql\_maker module
+=================
+
+.. automodule:: sql_maker
+   :members:
+   :undoc-members:
+   :show-inheritance:

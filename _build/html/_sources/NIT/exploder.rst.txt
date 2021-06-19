@@ -1,0 +1,7 @@
+exploder module
+===============
+
+.. automodule:: exploder
+   :members:
+   :undoc-members:
+   :show-inheritance:

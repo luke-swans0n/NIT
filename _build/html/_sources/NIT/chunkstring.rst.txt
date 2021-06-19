@@ -1,0 +1,7 @@
+chunkstring module
+==================
+
+.. automodule:: chunkstring
+   :members:
+   :undoc-members:
+   :show-inheritance:
