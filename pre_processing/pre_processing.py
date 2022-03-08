@@ -5,6 +5,7 @@ from itertools import repeat
 import pandas as pd
 from sqlalchemy import create_engine
 from ast import literal_eval
+from pathlib import Path
 logging.basicConfig(filename='../nit.log', level=logging.DEBUG)
 
 
