@@ -2,7 +2,8 @@ import logging
 from pathlib import Path
 import pandas as pd
 import numpy as np
-import psycopg
+import psycopg2
+
 import sqlalchemy
 log_path = Path("../nit.log").resolve()
 logging.basicConfig(filename=log_path, level=logging.DEBUG)
@@ -64,22 +65,24 @@ def create_dataframe(personfile, familyfile, personvariables, familyvariables):
     return per_df.set_index("FAMNUM").join(fam_df.set_index("FAMNUM"), how="left")
 def stringsplitter(string, period):
     size = int(len(string)/int(period))
+    if size==0:
+        return
     result = [string[x:x+size] for x in range(0, len(string), size)]
     return result
 if __name__ == "__main__":
     pervars, famvars, perfile, famfile = gary_maker()
     gary_df = create_dataframe(perfile, famfile, pervars, famvars)
-    print([column for column in gary_df.columns if "1-48" in column])
-    periodics = {"period48": gary_df[[column for column in gary_df.columns if "1-48" in column]],
-                     "period42": gary_df[[column for column in gary_df.columns if "0-42" in column]],
-                     "period16": gary_df[[column for column in gary_df.columns if "1-16" in column]],
-                     "period9": gary_df[[column for column in gary_df.columns if "1-9" in column]]}
-    print(periodics['period48'].info())
-    #engine = sqlalchemy.create_engine("jdbc:postgresql://localhost:5432/postgres")
-    for key, value in periodics.items():
-        for column in value.columns:
-            for element in value[column].values:
-                element = stringsplitter(element, 48)
+    #TODO: determine cause of JOBS-42 being NaN?
+    gary_df.drop(columns='JOBS0-42', axis=1, inplace=True)
+    periodics = {"period48": [gary_df[[column for column in gary_df.columns if "1-48" in column]], 48],
+                     "period42": [gary_df[[column for column in gary_df.columns if "0-42" in column]],42],
+                     "period16": [gary_df[[column for column in gary_df.columns if "1-16" in column]],16],
+                     "period9": [gary_df[[column for column in gary_df.columns if "1-9" in column]],9]}
+    engine = sqlalchemy.create_engine("postgresql://posgres:Pyth4g0r4$@localhost:5432/nit")
+    for df in periodics.values():
+        df[0] = df[0].applymap(lambda string: stringsplitter(string, df[1]))
+        df.to_sql(df[1], engine)
+
     print('done.')
      #   value.to_sql(f"{key}", engine)
     #engine.dispose()
